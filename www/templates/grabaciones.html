@@ -1,0 +1,38 @@
+<ion-view cache-view="false" title="Grabaciones" id="page4">
+    <ion-content padding="true" class="has-header">
+        <label class="item item-input">
+          <i class="icon ion-search placeholder-icon"></i>
+          <input type="search" placeholder="Buscar" ng-model="buscar.name">
+        </label>
+        <br>
+
+        <ul class="list">
+		    <div class="item item-icon-left item-button-right" ng-if="audioTracks!=0" ng-repeat="f in files | filter:buscar">
+		        <i class="icon ion-android-microphone assertive"></i>
+       	        {{f.name}}
+  		        <div class="buttons">
+      		        <button class="button" ng-click="playRecordedAudio(f.name)">
+         	            <i class="icon ion-ios-play dark"></i>
+      		        </button>
+     
+      		        <button class="button" ng-click="stopRecordedAudio(f.name)">
+         	            <i class="icon ion-stop"></i>
+      		        </button>
+			            <button class="button" ng-click="deleteRecordedAudio(f.name)">
+         	            <i class="icon ion-trash-a"></i>
+      		        </button>
+                  <button class="button" ng-click="shareAudio(f.name,f.nativeURL)">
+                      <i class="icon ion-android-share-alt"></i>
+                  </button>     		
+ 		        </div>
+		    </div>
+        <div ng-if="audioTracks==0">
+          <div class="card">
+            <div class="item item-text-wrap">
+              Actualmente no hay ningún Audio grabado en la Biblioteca de Grabaciones.
+            </div>
+          </div>
+        </div>
+        </ul>
+     </ion-content>
+</ion-view>

@@ -1,0 +1,87 @@
+<ion-view title="{{currentName}}" id="page2">
+	<div class="float-button" ng-if="status == 0" ng-click="info()">
+	  <span class="height-fix">
+	    <a ui-sref="add-trip"  class="content assertive">
+	      <i class="ion-information-circled"> </i>
+	    </a>
+	  </span>
+	</div>
+
+    <div ng-if="audioDirs==0" style="margin-top:200px;">
+        <div class="card">
+            <div class="item item-text-wrap">
+              Actualmente no se ha podido encontrar discos de música en la SDCARD de su dispositivo móvil).
+            </div>
+        </div>
+    </div>
+
+
+    <ion-content  padding="true" class="has-header">
+            <div class="row"  ng-repeat="image in images" ng-if="$index % 3 === 0 && status == 0" >
+            <div class="col col-33" ng-if="$index < images.length">
+                <div class="list card">
+                    <div class="item item-image">
+                        <img ng-src="{{images[$index].coverSrc}}" ng-click="openDir(images[$index].albumPath,images[$index].coverSrc)" width="100%">
+                    </div>
+                    <a class="item item-icon-left" href="#">
+                        <i class="icon ion-radio-waves "></i>
+                        <span class="badge badge-assertive">{{images[$index].trackCount}}</span>
+                    </a>
+                </div>
+            </div>
+            <div class="col col-33" ng-if="$index + 1 < images.length">
+                <div class="list card">
+                    <div class="item item-image">
+                        <img ng-src="{{images[$index + 1].coverSrc}}" ng-click="openDir(images[$index+1].albumPath,images[$index + 1].coverSrc)" width="100%">
+                    </div>
+                    <a class="item item-icon-left" href="#">
+                        <i class="icon ion-radio-waves"></i>
+                        <span class="badge badge-assertive">{{images[$index+1].trackCount}}</span>
+                    </a>
+                </div>
+            </div>
+            <div class="col col-33" ng-if="$index +2 < images.length">
+                <div class="list card">
+                    <div class="item item-image">
+                        <img ng-src="{{images[$index +2].coverSrc}}" ng-click="openDir(images[$index+2].albumPath,images[$index + 2].coverSrc)" width="100%">
+                    </div>
+                    <a class="item item-icon-left" href="#">
+                        <i class="icon ion-radio-waves"></i>
+                        <span class="badge badge-assertive">{{images[$index+2].trackCount}}</span>
+                    </a>
+                </div>
+            </div>                                  
+        </div>
+
+        <div class="list card" id="card-opacity" ng-if="status == 1">
+  			<div class="item item-body">
+  			  <img class="full-image" ng-src="{{cover}}">
+
+                <div class="list">
+                    <a class="item item-icon-left item-icon-right" ng-repeat="m in musicNew"  ng-if="m != null">
+                        <i ng-if="$index == currentPosition" class="icon ion-stats-bars"></i>
+                        <i ng-if="$index != currentPosition" class="icon ion-ios-musical-notes"></i>
+                            <div ng-click="playAudioTrack(m.nativeURL,m.name)">{{m.name | limitTo:30}}</div>
+                            
+                        <i class="icon ion-android-more-vertical" ng-click="trackOptions(m)"></i>
+                      </a>
+                </div>
+  			</div>
+		</div>
+        <br>
+        <br>
+    </ion-content>
+
+
+    <div class="row" style="position:fixed;bottom:0;height:50px;" ng-if="status == 1">
+        <div class="col text-center">
+            <button class="button button-icon stable icon ion-folder" ng-click="backAlbums()"></button>
+            <button class="button button-icon stable icon ion-skip-backward" ng-click="backTrack()"></button>
+            <button class="button button-icon stable icon ion-play" ng-click="resumeAudioTrack()" ng-if="trackStatus == 0"></button>
+            <button class="button button-icon stable icon ion-ios-pause" ng-click="pauseAudioTrack()" ng-if="trackStatus == 1"></button>
+            <button class="button button-icon stable icon ion-skip-forward" ng-click="nextTrack()"></button>
+            <button class="button button-icon stable icon ion-shuffle" ng-if="toggleStatus == 0" ng-click="setRandom()"></button>
+            <button class="button button-icon stable icon ion-ios-redo" ng-if="toggleStatus == 1" ng-click="setSequential()"></button>
+        </div>
+    </div>
+</ion-view>
